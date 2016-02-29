@@ -1,45 +1,53 @@
 ﻿function Get-FileName($extension = "txt") {
-    "{0}{1}_{2}.{3}" -f ($outputRootDir, $outputFileNamePrefix, $chunk, $extension)
+    "{0}{1}_{2}.{3}" -f ($outputRootDir, $outputFileNamePrefix, $currFileCount, $extension)
 }
 
-function Write-WavFile() {
+function Write-WavFile($speechChunk) {
     $speech = New-Object -TypeName System.Speech.Synthesis.SpeechSynthesizer
     $speech.SelectVoice("Microsoft Hazel Desktop")
-    $textToSpeak = Get-Content -Path $(Get-FileName) -Encoding UTF8
-    $speech.SetOutputToWaveFile($(Get-FileName "wav"))
-    $speech.Speak($textToSpeak)
+    $speech.SetOutputToWaveFile($(Get-FileName "wav") )
+    $speech.Speak($speechChunk)
     $speech.Dispose()
     $speech = $null
 }
 
-# This expects a $splitMarker in a source file, to denote the string where 1 file is to end and another is to start
-# All the output files have the same name, differing only by the incrementing counter $chunk
 function Split-File (
-    $fileToSplit = 'C:\Temp\PandP.txt',
-    $splitMarker = "SPLITHERE",
-    $outputFileNamePrefix = "austenx",
-    $outputRootDir = "c:\temp\"
-    ) {
+    $fileToSplit = 'C:\Temp\pandp.txt',
+    $splitMarker = $null,
+    $outputFileNamePrefix = "\Judex",
+    $outputRootDir = "c:\temp\",
+    $numberOfLinesPerFile = 4
+) {
     Add-Type -AssemblyName System.Speech
-    
-    $reader = New-Object -TypeName System.IO.StreamReader($fileToSplit)
-    $chunk = 1
-    $first = $true
+    $reader = New-Object -TypeName System.IO.StreamReader($fileToSplit, [System.Text.Encoding]::UTF8)
+    $chunk = $numberOfLinesPerFile
+    $currFileCount = 1
+    $currLineCount = 0
     $speech = New-Object -TypeName System.Speech.Synthesis.SpeechSynthesizer
     $speech.SelectVoice("Microsoft Hazel Desktop")
+    $currChunk = @()
+    $currChunk += "Start of book - section {0};" -f ($currFileCount)
+    
     while (($line = $reader.ReadLine()) -ne $null) {
-        if ($line -match $splitMarker) {
-            Write-WavFile
-            $chunk++
+        if ($currLineCount++ -ge $numberOfLinesPerFile) {
+            $currChunk += "End of section {0}" -f ($currFileCount)
+            Write-WavFile $currChunk
+            $currLineCount = 0
+            $currFileCount++
+            $currChunk = @()
+            $currChunk += "Start of Section {0};" -f ($currFileCount)
+            "{0}:{1}" -f ($(Get-Date), $($currChunk))
         } else {
-            Add-Content -Path $(Get-FileName "txt") -Value $line -Encoding utf8
+            $currChunk += $line
         }
     }
-    Write-WavFile
+    Write-WavFile $currChunk
     $reader.Close()
     $reader.Dispose()
     $reader = $null
 }
 
+$currDir = "c:\sandbox\PowerShell"
 #entry point...
-Split-File 
+Split-File -fileToSplit $currDir\JudeTheObscure.txt -outputRootDir $currDir -numberOfLinesPerFile 800
+
