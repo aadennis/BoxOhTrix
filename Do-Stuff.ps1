@@ -3,10 +3,10 @@
      Basic function template - replace with your own stuff 
 .Example 
     Do-Stuff -StuffPrefix "pre_"
+.Example 
     Do-Stuff -StuffPrefix "pre_" -Verbose
+.Example 
     Do-Stuff -StuffPrefix "before_" -LoopCount 3 -Verbose
-
-    #https://msdn.microsoft.com/en-us/powershell/scripting/core-powershell/ise/introducing-the-windows-powershell-ise
 #>
 function Do-Stuff {
 [CmdletBinding(SupportsShouldProcess)]
@@ -28,4 +28,4 @@ Param (
         Write-Verbose "I am in the End block"
     }
 }
-
+#https://msdn.microsoft.com/en-us/powershell/scripting/core-powershell/ise/introducing-the-windows-powershell-ise
