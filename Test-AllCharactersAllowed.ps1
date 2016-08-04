@@ -22,8 +22,9 @@ function Compare-ExpectedAndActualResults($TestString, $ExpectedResult) {
     $actualResult = Test-AllCharactersAllowed $TestString
     if ($ExpectedResult -ne $actualResult) {
         Write-Host "FAIL: String under test:[$TestString];`t Expected:[$ExpectedResult];`t Actual: [$actualResult]" -BackgroundColor Red -ForegroundColor White
+        return
     }
-     Write-Host "PASS: String under test:[$TestString];`t Expected:[$ExpectedResult];`t Actual: [$actualResult]" -BackgroundColor White -ForegroundColor Black
+    Write-Host "PASS: String under test:[$TestString];`t Expected:[$ExpectedResult];`t Actual: [$actualResult]" -BackgroundColor White -ForegroundColor Black
 }
 
 <# Tests...
