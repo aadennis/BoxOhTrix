@@ -104,9 +104,10 @@ function Split-File (
     $reader = $null
 }
 
-$currDir = "c:\sandbox\PowerShell"
+$currDir = "C:\Sandbox\PowerShell\MySpeechForCar"
 #entry point...
 #Split-File -splitMarker "SPLITHERE" -fileToSplit $currDir\PAndP.txt -outputRootDir $currDir
 
 #Split-File -fileToSplit C:\sandbox\PowerShell\SmallTestFile.txt -outputRootDir $currDir -numberOfLinesPerFile 5
-Split-File -fileToSplit C:\sandbox\PowerShell\JudeTheObscure.txt -outputRootDir $currDir -numberOfLinesPerFile 800
+#Split-File -fileToSplit C:\sandbox\PowerShell\JudeTheObscure.txt -outputRootDir $currDir -numberOfLinesPerFile 800
+Split-File -fileToSplit C:\sandbox\PowerShell\MySpeechForCar\PlayByPlayAngularSrc.txt -outputRootDir $currDir -numberOfLinesPerFile 800
