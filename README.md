@@ -1,9 +1,9 @@
 # TransposeDates.ps1
 
 Given a text file, pass in a) the From locale, b) the To locale, c) array of the column indexes which contain the dates to be transposed.
-An example file is 
+An example file is _
 "Record 1,Not much here,01/07/2010,Just here,03/08/2012,And a vowel please Rachel"
-"Record    2,Quite a lot here         ,01/06/2011,Over there,22/12/2015, Just the consonant please Rache"
+"Record    2,Quite a lot here         ,01/06/2011,Over there,22/12/2015, Just the consonant please Rache"_
 
 Given a call of
 $datesIndexArray = 3,5
