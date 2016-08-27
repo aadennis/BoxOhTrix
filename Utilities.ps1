@@ -39,7 +39,7 @@ function Get-Locale() {
     Write-Status "Running in the [$locale] locale."
 }
 
-# Return $true if the passed date is in the format a) dd/mm/yyyy or b) mm/dd/yyyy, else false
+# (naive) Return $true if the passed date is in the format a) dd/mm/yyyy or b) mm/dd/yyyy, else false
 function IsValid-Date($dateString) {
     if ($dateString.length -ne 10 -or $dateString[2] -ne "/" -or $dateString[5] -ne "/") {
         return $false
@@ -56,12 +56,15 @@ function Convert-Date {
         [string] $dateString
     )
     if ($dateString.length -eq 0) {
-        Write-Verbose "No date found in [Convert-Date]"
-        return
+        return "No date found in [Convert-Date]"
     }
+
+    if ($dateString.length -ne 10) {
+        return "String [$dateString] passed to [Convert-Date] must have 10 characters"
+    }
+
     if (-not (IsValid-Date($dateString))) {
-     Write-Verbose "String [$dateString] passed to [Convert-Date] is not a date"
-        return
+        return "String [$dateString] passed to [Convert-Date] is not a date"
     }
 
     return $dateString.Substring(3,2) + "/" + $dateString.Substring(0,2) + "/" + $dateString.Substring(6)
@@ -81,13 +84,11 @@ function Convert-ArrayToCSVRecord {
     begin {
         [string] $recordToCreate = $null
         [boolean] $first = $true
-        $delimiterInLoop = $delimiter
     }
     process {
         foreach ($record in $recordSet) {
             $delimiterInLoop = if ($first) {$null} else {$delimiter}; $first = $false
             $recordToCreate += "$delimiterInLoop$record"
-            #Write-Verbose $recordToCreate
         }
     }
     end {
@@ -100,16 +101,7 @@ function Convert-ArrayToCSVRecord {
 # Testing...
 <#
 
-#fail...
-$ss = Convert-Date "22/12/2015x" -Verbose
-$ss = Convert-Date "22x12/2015" -Verbose
-$ss = Convert-Date "22/12x2015" -Verbose
 
-#pass... (but still naive for now)
-
-$ss = Convert-Date "03/12/2015" -Verbose
-
-#now?x
 #fail...
 #Position does not exist
 Convert-DatesInFile2 -recordSet $fileToParseInMemory -datePosition 13, 15 -Verbose
