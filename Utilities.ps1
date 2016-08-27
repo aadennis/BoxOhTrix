@@ -67,4 +67,29 @@ function Convert-Date {
     return $dateString.Substring(3,2) + "/" + $dateString.Substring(0,2) + "/" + $dateString.Substring(6)
 }
 
+# Given an array, convert and return a Delimiter Separated Record, with a default delimiter of [,]
+function Convert-ArrayToCSV {
+ [CmdletBinding()]
+    Param (
+        [Parameter(Mandatory)]
+        $recordSet,
+        $delimiter = ","
+    )
+    Write-Verbose "Stuff comes out 1"
+    foreach ($record in $recordSet) {
+        Write-Verbose $record
+    }
+}
+
+
 #-------------------------------------------------------------------------
+# Testing...
+#fail...
+$ss = Convert-Date "22/12/2015x" -Verbose
+$ss = Convert-Date "22x12/2015" -Verbose
+$ss = Convert-Date "22/12x2015" -Verbose
+
+#pass... (but still naive for now)
+
+$ss = Convert-Date "03/12/2015" -Verbose
+

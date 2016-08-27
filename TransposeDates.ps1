@@ -1,4 +1,4 @@
-﻿cd c:\Sandbox\PowerShell
+﻿Set-Location E:\Sandbox\PowerShell\BoxOhTrix
 . .\Utilities.ps1
 
 Set-StrictMode -Version latest
@@ -11,16 +11,14 @@ function Convert-DatesInFile($path) {
     Validate-File $path
     Backup-File $path
 
-    $outputFileContent = ""
+    $VerboseFileContent = ""
     Get-Content $path | ForEach-Object {
         $record = $_
-        $outputFileContent += Convert-DatesInRecord $record
+        $VerboseFileContent += Convert-DatesInRecord $record
     }
-    $outputFileContent | Set-Content $path
+    $VerboseFileContent | Set-Content $path
     Write-Status "Conversion complete"
 }
-
-
 
 
 
@@ -35,26 +33,20 @@ function Convert-DatesInMemory {
 
     Begin {
         $cumulativeRecordsAsArray = @()
+        [string[]] $recordAsArray = @()
     }
     Process {
         foreach ($record in $recordSet) {
-            Write-Host "Before: $record"
-            $recordAsArray = $record -split ","
-            Write-Host "Before as array: $recordAsArray"
+            Write-Verbose "Before: $record"
+            $recordAsArray = [string[]] $record -split ","
+            Write-Verbose "Before as array: $recordAsArray"
             $recordAsArray.Count
 
             foreach ($dateIndex in $datePosition) {
                 $recordAsArray[$dateIndex-1] = Convert-Date $recordAsArray[$dateIndex-1]
             }
-           Write-Host "After as array: $recordAsArray"
 
-           foreach ($ff in $recordAsArray) {
-            Write-Host "a: $ff"
-           }
-
-           $recordAsArray.GetType()
-           $uuu = $recordAsArray | Select-Object | ConvertTo-Csv 
-           $uuu
+           Convert-ArrayToCSV $recordAsArray
 
            $cumulativeRecordsAsArray += $recordAsArray
         }
@@ -66,7 +58,7 @@ function Convert-DatesInMemory {
 
 #Test file 1
 $fileToParseInMemory = 
-@("Record 1,Not much here,01/07/2010, Just here,03/08/2012,And a vowel please Rachel",
+@("Record 1,xNot much here,01/07/2010, Just here,03/08/2012,And a vowel please Rachel",
 "Record    2,Quite a lot here         ,01/06/2011,Over there,22/12/2015, Just the consonant please Rache")
 
 #$fileToParseInMemory
@@ -83,6 +75,7 @@ $fileToParseInMemory.Count
 #Convert-DatesInFile -path "c:\sandbox\powershell\BasicFile.csv"
 
 
+
 #pass
 $xxx = Convert-DatesInMemory -recordSet $fileToParseInMemory -datePosition 3, 5 -Verbose
 
@@ -90,12 +83,4 @@ $xxx.Count
 
 return
 
-#fail...
-$ss = Convert-Date "22/12/2015x" -Verbose
-$ss = Convert-Date "22x12/2015" -Verbose
-$ss = Convert-Date "22/12x2015" -Verbose
-
-#pass... (but still naive for now)
-
-$ss
-$ss = Convert-Date "03/12/2015" -Verbose
+e
