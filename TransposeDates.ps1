@@ -64,9 +64,6 @@ $fileToParseInMemory =
 #$fileToParseInMemory
 $fileToParseInMemory.Count
 
-
-
-
 #pass
 $xxx = Convert-DatesInMemory -recordSet $fileToParseInMemory -datePosition 3, 5 -Verbose
 

@@ -68,22 +68,53 @@ function Convert-Date {
 }
 
 # Given an array, convert and return a Delimiter Separated Record, with a default delimiter of [,]
-function Convert-ArrayToCSV {
+# example:
+# Convert-ArrayToCSVRecord -recordSet $testArray -Verbose
+# Convert-ArrayToCSVRecord -recordSet $testArray -delimiter ";" -Verbose
+function Convert-ArrayToCSVRecord {
  [CmdletBinding()]
     Param (
         [Parameter(Mandatory)]
         $recordSet,
         $delimiter = ","
     )
-    Write-Verbose "Stuff comes out 1"
-    foreach ($record in $recordSet) {
-        Write-Verbose $record
+    begin {
+        [string] $recordToCreate = $null
+        [boolean] $first = $true
+        $delimiterInLoop = $delimiter
     }
+    process {
+        foreach ($record in $recordSet) {
+            $delimiterInLoop = if ($first) {$null} else {$delimiter}; $first = $false
+            $recordToCreate += "$delimiterInLoop$record"
+            Write-Verbose $recordToCreate
+        }
+        
+    }
+    end {}
 }
 
 
 #-------------------------------------------------------------------------
 # Testing...
+
+#Tests for Convert-ArrayToCSVRecordArrayToCSV
+$testArray = @()
+$testArray += "The first field"
+$testArray += 22
+$testArray += "01/01/2020"
+$testArray += "10109.222"
+
+$testArray
+
+$x = Convert-ArrayToCSVRecord -recordSet $testArray -Verbose
+$x
+
+$x = Convert-ArrayToCSVRecord -recordSet $testArray -delimiter ";" -Verbose
+$x
+
+return
+
 #fail...
 $ss = Convert-Date "22/12/2015x" -Verbose
 $ss = Convert-Date "22x12/2015" -Verbose
@@ -93,3 +124,14 @@ $ss = Convert-Date "22/12x2015" -Verbose
 
 $ss = Convert-Date "03/12/2015" -Verbose
 
+#now?
+#fail...
+#Position does not exist
+Convert-DatesInFile2 -recordSet $fileToParseInMemory -datePosition 13, 15 -Verbose
+#Position1 is not a date
+Convert-DatesInFile2 -recordSet $fileToParseInMemory -datePosition 2, 5 -Verbose
+
+
+
+# Execute this...
+Convert-DatesInFile -path "c:\sandbox\powershell\BasicFile.csv"
