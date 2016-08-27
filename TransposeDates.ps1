@@ -64,15 +64,6 @@ $fileToParseInMemory =
 #$fileToParseInMemory
 $fileToParseInMemory.Count
 
-#fail...
-#Position does not exist
-#Convert-DatesInFile2 -recordSet $fileToParseInMemory -datePosition 13, 15 -Verbose
-#Position1 is not a date
-#Convert-DatesInFile2 -recordSet $fileToParseInMemory -datePosition 2, 5 -Verbose
-
-
-# Execute this...
-#Convert-DatesInFile -path "c:\sandbox\powershell\BasicFile.csv"
 
 
 
@@ -80,7 +71,3 @@ $fileToParseInMemory.Count
 $xxx = Convert-DatesInMemory -recordSet $fileToParseInMemory -datePosition 3, 5 -Verbose
 
 $xxx.Count
-
-return
-
-e
