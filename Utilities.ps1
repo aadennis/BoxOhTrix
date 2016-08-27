@@ -89,7 +89,6 @@ function Convert-ArrayToCSVRecord {
             $recordToCreate += "$delimiterInLoop$record"
             #Write-Verbose $recordToCreate
         }
-        
     }
     end {
         return $recordToCreate
@@ -99,31 +98,7 @@ function Convert-ArrayToCSVRecord {
 
 #-------------------------------------------------------------------------
 # Testing...
-
-#Tests for Convert-ArrayToCSVRecordArrayToCSV
-$testArray = @()
-$testArray += "The first field"
-$testArray += 22
-$testArray += "01/01/2020"
-$testArray += "10109.222"
-
-$testArray
-
-$cumulativeRecordSet = @()
-
-$a = Convert-ArrayToCSVRecord -recordSet $testArray -Verbose
-$cumulativeRecordSet += "$a"
-
-$b = Convert-ArrayToCSVRecord -recordSet $testArray -delimiter ";" -Verbose
-$cumulativeRecordSet += "$b"
-
-"Actual result:"
-$cumulativeRecordSet
-$cumulativeRecordSet.Count
-
-#$cumulativeRecordSet
-
-return
+<#
 
 #fail...
 $ss = Convert-Date "22/12/2015x" -Verbose
@@ -145,3 +120,5 @@ Convert-DatesInFile2 -recordSet $fileToParseInMemory -datePosition 2, 5 -Verbose
 
 # Execute this...
 Convert-DatesInFile -path "c:\sandbox\powershell\BasicFile.csv"
+
+#>
