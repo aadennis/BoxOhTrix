@@ -87,11 +87,13 @@ function Convert-ArrayToCSVRecord {
         foreach ($record in $recordSet) {
             $delimiterInLoop = if ($first) {$null} else {$delimiter}; $first = $false
             $recordToCreate += "$delimiterInLoop$record"
-            Write-Verbose $recordToCreate
+            #Write-Verbose $recordToCreate
         }
         
     }
-    end {}
+    end {
+        return $recordToCreate
+    }
 }
 
 
@@ -107,11 +109,19 @@ $testArray += "10109.222"
 
 $testArray
 
-$x = Convert-ArrayToCSVRecord -recordSet $testArray -Verbose
-$x
+$cumulativeRecordSet = @()
 
-$x = Convert-ArrayToCSVRecord -recordSet $testArray -delimiter ";" -Verbose
-$x
+$a = Convert-ArrayToCSVRecord -recordSet $testArray -Verbose
+$cumulativeRecordSet += "$a"
+
+$b = Convert-ArrayToCSVRecord -recordSet $testArray -delimiter ";" -Verbose
+$cumulativeRecordSet += "$b"
+
+"Actual result:"
+$cumulativeRecordSet
+$cumulativeRecordSet.Count
+
+#$cumulativeRecordSet
 
 return
 
@@ -124,7 +134,7 @@ $ss = Convert-Date "22/12x2015" -Verbose
 
 $ss = Convert-Date "03/12/2015" -Verbose
 
-#now?
+#now?x
 #fail...
 #Position does not exist
 Convert-DatesInFile2 -recordSet $fileToParseInMemory -datePosition 13, 15 -Verbose
