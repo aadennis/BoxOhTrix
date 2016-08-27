@@ -32,3 +32,35 @@ Describe "Convert-ArrayToCSVRecord" {
         
     }
 }
+
+Describe "Convert-Date" {
+    It "returns a string describing the error if the date is not valid" {
+    #arrange 
+        $badDate1 = "22/12/2015x"
+        $badDate2 = "22x12/2015"
+        $badDate3 = "22/12x2015"
+        
+        #act
+        $ret1 = Convert-Date $badDate1 
+        $ret2 = Convert-Date $badDate2
+        $ret3 = Convert-Date $badDate3
+
+        #assert
+        $ret1 | should be "String [22/12/2015x] passed to [Convert-Date] is not a date" 
+        $ret2 | should be "String [22x12/2015] passed to [Convert-Date] is not a date" 
+        $ret3 | should be "String [22/12x2015] passed to [Convert-Date] is not a date" 
+    }
+
+    It "returns the converted date" {
+    #arrange 
+        $dateGBFormat = "22/12/2015"
+        $dateUSFormat = "12/22/2015"
+        
+        #act
+        $ret = Convert-Date $dateGBFormat 
+
+        #assert
+        $ret | should be $dateUSFormat
+    }
+
+}
