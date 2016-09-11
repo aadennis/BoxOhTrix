@@ -12,7 +12,7 @@ $vmSet = "MahWeb01", "MahWeb02", "MahDb"
 
 $vmSet | ForEach-Object {
     $vmName = $_
-    $vmCreateArgs = "vm create $vmName $win2012R2Image $username $password --location $location --vm-size $vmSize"
+    $vmCreateArgs = "vm create $vmName $win2012R2Image $username $password --location $location --vm-size $vmSize -r"
     Write-Output "Arguments passed to azure.cmd: $vmCreateArgs"
     Start-Process "azure.cmd" -ArgumentList $vmCreateArgs -NoNewWindow -RedirectStandardError $errorLog
 }
