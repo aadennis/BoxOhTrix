@@ -1,0 +1,31 @@
+Get-AzureVMImage | Where-Object {$_.Label -like '*2016*'} | select -First 1
+PS C:\Sandbox\PowerShell> Get-AzureVMImage | Where-Object {$_.Label -like '*2016*'} | Select-Object {$_.Label,  $_.ImageName}
+Also... -like '*biztalk*'
+
+ImageName            : 2cdc6229df6344129ee553dd3499f0d3__BizTalk-Server-2016-CTP2
+
+$_.Label,  $_.ImageName                                                                                                                                                  
+-----------------------                                                                                                                                                  
+{SQL Server 2016 CTP3.1 Evaluation on Windows Server 2012 R2, fb83b3509582419d99629ce476bcb5c8__SQL16CTP3.113.0.801.12SQLENTCOREWS2012R2}                                
+{SQL Server 2016 CTP3.2 Evaluation on Windows Server 2012 R2, fb83b3509582419d99629ce476bcb5c8__SQL16CTP3.2_13.0.900.73SQLEVALWS2012R2}                                  
+{SQL Server 2016 CTP3 Evaluation on Windows Server 2012 R2, fb83b3509582419d99629ce476bcb5c8__SQL16CTP313.0.700.242SQLEVALWS2012R2}                                      
+{SQL Server 2016 Release Candidate 3.0, fb83b3509582419d99629ce476bcb5c8__SqlServer-2016-RC3-13.0.1400.361-Evaluation-ENU-2012R2-CY16-SU03v2}                            
+{SQL Server 2016 RTM Developer Windows Server 2012 R2, fb83b3509582419d99629ce476bcb5c8__SqlServer-2016-RTM-13.0.1601.5-Developer-ENU-WS2012R2-CY16-SU03}                
+{SQL Server 2016 Enterprise Windows Server 2012 R2, fb83b3509582419d99629ce476bcb5c8__SqlServer-2016-RTM-13.0.1601.5-Enterprise-ENU-WS2012R2-CY16-SU0310}                
+{SQL Server 2016 RTM Express Windows Server 2012 R2, fb83b3509582419d99629ce476bcb5c8__SqlServer-2016-RTM-13.0.1601.5-Express-ENU-WS2012R2-CY16-SU03v7}                  
+{SQL Server 2016 RTM Standard Windows Server 2012 R2, fb83b3509582419d99629ce476bcb5c8__SqlServer-2016-RTM-13.0.1601.5-Standard-ENU-WS2012R2-CY16-SU03v6}                
+{SQL Server 2016 RTM Web Windows Server 2012 R2, fb83b3509582419d99629ce476bcb5c8__SqlServer-2016-RTM-13.0.1601.5-Web-ENU-WS2012R2-CY16-SU03v5}                          
+{SQL Server 2016 RTM Enterprise Windows Server 2012 R2, fb83b3509582419d99629ce476bcb5c8__SqlServer-2016-RTM-RServices-13.0.1601.5-Enterprise-ENU-WS2012R2-CY16-SU0310...
+
+
+$_.Label,  $_.ImageName                                                                                                         
+-----------------------                                                                                                         
+{BizTalk Server 2013 Enterprise on Windows Server 2012, 2cdc6229df6344129ee553dd3499f0d3__BizTalk-Server-2013-Enterprise}       
+{BizTalk Server 2013 R2 Enterprise, 2cdc6229df6344129ee553dd3499f0d3__BizTalk-Server-2013-R2-Enterprise-Nov-2014}               
+{BizTalk Server 2013 R2 Standard, 2cdc6229df6344129ee553dd3499f0d3__BizTalk-Server-2013-R2-Standard-Nov-2014}                   
+{BizTalk Server 2013 Standard on Windows Server 2012, 2cdc6229df6344129ee553dd3499f0d3__BizTalk-Server-2013-Standard}           
+{BizTalk Server 2016 Community Technology Preview 2, 2cdc6229df6344129ee553dd3499f0d3__BizTalk-Server-2016-CTP2}                
+{BizTalk Server 2013 Developer on Windows Server 2012, 2cdc6229df6344129ee553dd3499f0d3__BizTalk-Server-2013-Developer-May-2014}
+
+
+
