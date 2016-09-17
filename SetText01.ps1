@@ -1,4 +1,4 @@
-﻿$searchString = 'bank'
+﻿$searchString = 'bank' 
 $replaceString = 'tornado'
 $rootDir = 'C:\temp4'
 
