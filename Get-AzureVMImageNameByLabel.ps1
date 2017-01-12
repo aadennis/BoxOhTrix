@@ -46,7 +46,7 @@ function Get-AzureVMImageNameByLabel {
     }
 }
 
-Get-AzureImageNameByLabel -imageWildCard "2014 SP1 Standard" -maxResults 30
+Get-AzureVMImageNameByLabel -imageWildCard "2014 SP1 Standard" -maxResults 30
 
 
 
